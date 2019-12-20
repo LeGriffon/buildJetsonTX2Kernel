@@ -40,12 +40,32 @@ if [ -f /sys/module/tegra_fuse/parameters/tegra_chip_id ]; then
             JETSON_BOARD="TX1" ;;
         24)
             JETSON_BOARD="TX2" ;;
+        25)
+            JETSON_BOARD="Xavier" ;;
         *)
             JETSON_BOARD="UNKNOWN" ;;
     esac
     JETSON_DESCRIPTION="NVIDIA Jetson $JETSON_BOARD"
 fi
 export JETSON_BOARD
+
+# Write CUDA architecture
+# https://developer.nvidia.com/cuda-gpus
+# https://devtalk.nvidia.com/default/topic/988317/jetson-tx1/what-should-be-the-value-of-cuda_arch_bin/
+case $JETSON_BOARD in
+    "Xavier") 
+        JETSON_CUDA_ARCH_BIN="7.2" ;;
+    "TX2" | "TX2i") 
+        JETSON_CUDA_ARCH_BIN="6.2" ;;
+    "TX1")
+        JETSON_CUDA_ARCH_BIN="5.3" ;;
+    "TK1")
+        JETSON_CUDA_ARCH_BIN="3.2" ;;
+    * )
+        JETSON_CUDA_ARCH_BIN="NONE" ;;
+esac
+# Export Jetson CUDA ARCHITECTURE
+export JETSON_CUDA_ARCH_BIN
 
 # NVIDIA Jetson version
 # reference https://devtalk.nvidia.com/default/topic/860092/jetson-tk1/how-do-i-know-what-version-of-l4t-my-jetson-tk1-is-running-/
@@ -66,6 +86,8 @@ if [ -f /etc/nv_tegra_release ]; then
     # https://developer.nvidia.com/embedded/jetpack-archive
     if [ "$JETSON_BOARD" = "TX2i" ] ; then 
         case $JETSON_L4T in
+            "28.3.1")
+                    JETSON_JETPACK="3.3.1" ;;
             "28.2.1")
                     JETSON_JETPACK="3.2.1" ;;
             "28.2") 
@@ -75,16 +97,14 @@ if [ -f /etc/nv_tegra_release ]; then
         esac        
     elif [ "$JETSON_BOARD" = "TX2" ] ; then
         case $JETSON_L4T in
-            "28.2.1")
-                    JETSON_JETPACK="3.2.1" ;;
-            "28.2") 
-                    JETSON_JETPACK="3.2" ;;
-            "28.1") 
-                    JETSON_JETPACK="3.1" ;;
-            "27.1") 
-                    JETSON_JETPACK="3.0" ;;
-            *)
-               JETSON_JETPACK="UNKNOWN" ;;
+            "32.3.1") JETSON_JETPACK="4.3" ;;
+            "32.2.1") JETSON_JETPACK="4.2.2" ;;
+            "28.3.1") JETSON_JETPACK="3.3.1" ;;
+            "28.2.1") JETSON_JETPACK="3.2.1" ;;
+            "28.2") JETSON_JETPACK="3.2" ;;
+            "28.1") JETSON_JETPACK="3.1" ;;
+            "27.1") JETSON_JETPACK="3.0" ;;
+            *) JETSON_JETPACK="UNKNOWN" ;;
         esac
     elif [ "$JETSON_BOARD" = "TX1" ] ; then
         case $JETSON_L4T in
@@ -131,6 +151,14 @@ else
     JETSON_CUDA="NOT INSTALLED"
 fi
 
+# Extract cuDNN version
+JETSON_CUDNN=$(dpkg -l 2>/dev/null | grep -m1 "libcudnn")
+if [ ! -z "$JETSON_CUDNN" ] ; then
+    JETSON_CUDNN=$(echo $JETSON_CUDNN | sed 's/.*libcudnn[0-9] \([^ ]*\).*/\1/' )
+else
+    JETSON_CUDNN="NOT_INSTALLED"
+fi
+
 # Read opencv version
 pkg-config --exists opencv
 if [ $? == "0" ] ; then
@@ -139,15 +167,10 @@ else
     JETSON_OPENCV="NOT INSTALLED"
 fi
 
-export JETSON_BOARD
+# Export Library
 export JETSON_CUDA
+export JETSON_CUDNN
 export JETSON_JETPACK
 export JETSON_L4T
-
-# TODO Add enviroments variables:
-# - UID -> https://devtalk.nvidia.com/default/topic/996988/jetson-tk1/chip-uid/post/5100481/#5100481
-# - GCID, BOARD, EABI
-# - cuDNN
-# - TensorRT
-# - Visionworks
+export JETSON_OPENCV
 

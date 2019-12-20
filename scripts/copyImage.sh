@@ -1,5 +1,6 @@
 #!/bin/bash
-cd /usr/src/kernel/kernel-4.4
+# cd /usr/src/kernel/kernel-4.4
+cd $KERNEL_FOLDER
 # On the stock Jetson TX2 install, there is no zImage in the boot directory
 # So we just copy the Image file over
 # If the zImage is needed, you must either
