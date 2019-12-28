@@ -59,7 +59,7 @@ wget -N $KERNEL_LINK
 sudo tar -xvf public_sources.tbz2 $KERNEL_INTERNAL_FOLDER
 tar -xvf $KERNEL_INTERNAL_FOLDER
 # Space is tight; get rid of the compressed kernel source
-rm -r public_sources
+rm -r Linux_for_Tegra
 
 cd $KERNEL_FOLDER
 
