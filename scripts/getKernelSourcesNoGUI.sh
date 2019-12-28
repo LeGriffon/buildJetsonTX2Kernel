@@ -14,6 +14,11 @@ KERNEL_FOLDER=""
 
 # Download kernel
 case $JETSON_L4T in
+    "32.3.1")
+            KERNEL_LINK="https://developer.download.nvidia.cn/embedded/L4T/r32-3-1_Release_v1.0/Sources/T186/public_sources.tbz2"
+            KERNEL_INTERNAL_FOLDER="Linux_for_Tegra/source/public/kernel_src.tbz2"
+            KERNEL_FOLDER="kernel/kernel-4.9" 
+            ;;
     "31.1.0")
             KERNEL_LINK="https://developer.download.nvidia.com/embedded/L4T/r31_Release_v1.0/BSP/public_sources.tbz2"
             KERNEL_INTERNAL_FOLDER="public_release/kernel_src.tbz2"
