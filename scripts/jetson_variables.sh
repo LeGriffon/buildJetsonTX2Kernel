@@ -86,6 +86,8 @@ if [ -f /etc/nv_tegra_release ]; then
     # https://developer.nvidia.com/embedded/jetpack-archive
     if [ "$JETSON_BOARD" = "TX2i" ] ; then 
         case $JETSON_L4T in
+            "28.3.2")
+                    JETSON_JETPACK="3.3.2" ;;
             "28.3.1")
                     JETSON_JETPACK="3.3.1" ;;
             "28.2.1")
@@ -99,6 +101,7 @@ if [ -f /etc/nv_tegra_release ]; then
         case $JETSON_L4T in
             "32.3.1") JETSON_JETPACK="4.3" ;;
             "32.2.1") JETSON_JETPACK="4.2.2" ;;
+            "28.3.2") JETSON_JETPACK="3.3.2" ;;
             "28.3.1") JETSON_JETPACK="3.3.1" ;;
             "28.2.1") JETSON_JETPACK="3.2.1" ;;
             "28.2") JETSON_JETPACK="3.2" ;;
