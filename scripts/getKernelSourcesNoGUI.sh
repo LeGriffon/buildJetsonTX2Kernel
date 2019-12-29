@@ -23,6 +23,7 @@ case $JETSON_L4T in
             KERNEL_LINK="https://developer.nvidia.com/embedded/L4T/r28_Release_v3.2/sources/T186/public_sources.tbz2"
             KERNEL_INTERNAL_FOLDER="public_sources/kernel_src.tbz2"
             KERNEL_FOLDER="kernel/kernel-4.4" 
+            ;;
     "28.3.1")
             KERNEL_LINK="https://developer.nvidia.com/embedded/dlc/r28_Release_v3.1/sources/T186/public_sources.tbz2"
             KERNEL_INTERNAL_FOLDER="public_sources/kernel_src.tbz2"
