@@ -20,7 +20,7 @@ case $JETSON_L4T in
             KERNEL_FOLDER="kernel/kernel-4.9" 
             ;;
     "28.3.2")
-            KERNEL_LINK="https://developer.nvidia.com/embedded/L4T/r28_Release_v3.2/sources/T186/public_sources.tbz2"
+            KERNEL_LINK="https://developer.nvidia.com/embedded/dlc/r28_Release_v3.1/sources/T186/public_sources.tbz2"
             KERNEL_INTERNAL_FOLDER="public_sources/kernel_src.tbz2"
             KERNEL_FOLDER="kernel/kernel-4.4" 
             ;;
@@ -59,7 +59,7 @@ wget -N $KERNEL_LINK
 sudo tar -xvf public_sources.tbz2 $KERNEL_INTERNAL_FOLDER
 tar -xvf $KERNEL_INTERNAL_FOLDER
 # Space is tight; get rid of the compressed kernel source
-rm -r public_sources
+# rm -r public_sources
 
 cd $KERNEL_FOLDER
 
